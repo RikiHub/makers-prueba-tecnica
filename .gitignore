@@ -1,0 +1,15 @@
+﻿# Node
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
