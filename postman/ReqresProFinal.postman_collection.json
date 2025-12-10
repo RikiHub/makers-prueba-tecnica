@@ -1,0 +1,160 @@
+{
+  "info": {
+    "name": "Reqres Pro - Custom Endpoint Final",
+    "_postman_id": "abcdef12-3456-7890-abcd-ef1234567890",
+    "description": "Colección final para la tarea técnica: POST y GET con extracción de ID y validación de campos en Reqres Pro.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Ping - Verificar API Key",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/ping",
+          "host": ["{{base_url}}"],
+          "path": ["ping"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Pro Key funciona\", () => {",
+              "    const res = pm.response.json();",
+              "    pm.expect(res.status).to.eql(\"pro-ok\");",
+              "    pm.expect(res.tier).to.eql(\"pro\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /users - Crear usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test User\",\n  \"job\": \"Automation Engineer\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/{{path}}",
+          "host": ["{{base_url}}"],
+          "path": ["{{path}}"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200 o 201\", () => {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+              "});",
+              "",
+              "const res = pm.response.json();",
+              "pm.test(\"Response tiene id\", () => {",
+              "    pm.expect(res.id).to.exist;",
+              "});",
+              "pm.test(\"Response tiene createdAt y updatedAt\", () => {",
+              "    pm.expect(res).to.have.property(\"createdAt\");",
+              "    pm.expect(res).to.have.property(\"updatedAt\");",
+              "});",
+              "pm.environment.set(\"pro_user_id\", res.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /users - Validar usuario creado",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/{{path}}",
+          "host": ["{{base_url}}"],
+          "path": ["{{path}}"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"GET status 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "pm.test(\"ID coincide con POST\", () => {",
+              "    pm.expect(data.id).to.eql(pm.environment.get(\"pro_user_id\"));",
+              "});",
+              "pm.test(\"Name coincide\", () => {",
+              "    pm.expect(data.name).to.eql(\"Test User\");",
+              "});",
+              "pm.test(\"Job coincide\", () => {",
+              "    pm.expect(data.job).to.eql(\"Automation Engineer\");",
+              "});",
+              "pm.test(\"Response tiene createdAt y updatedAt\", () => {",
+              "    pm.expect(data).to.have.property(\"createdAt\");",
+              "    pm.expect(data).to.have.property(\"updatedAt\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://reqres.in/api/custom"
+    },
+    {
+      "key": "api_key",
+      "value": "TU_API_KEY"
+    },
+    {
+      "key": "path",
+      "value": "users"
+    }
+  ]
+}
+

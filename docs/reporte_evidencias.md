@@ -5,8 +5,8 @@ Este documento recopila las evidencias resultantes de la ejecución de los casos
 ---
 
 ## 1. Resumen General
-- Total de casos ejecutados: 13  
-- Casos exitosos: 13  
+- Total de casos ejecutados: 10  
+- Casos exitosos: 10 
 - Casos fallidos: 0  
 - Severidad de hallazgos: No se encontraron defectos en el flujo probado.  
 - Estado final: **Aprobado**
@@ -78,28 +78,4 @@ Este documento recopila las evidencias resultantes de la ejecución de los casos
 ### **TC-FUNC-010 – Movimientos vacío**
 **Resultado:** ✔ Mensaje mostrado correctamente  
 **Evidencia:**  
-
----
-
-### **TC-FUNC-011 – Input de letras en monto**
-**Resultado:** ✔ Campo no permite caracteres inválidos  
-**Evidencia:**  
-
----
-
-### **TC-FUNC-012 – Sesión expirada**
-**Resultado:** ✔ Redirige correctamente  
-**Evidencia:**  
-
----
-
-### **TC-FUNC-013 – Usuario destino inexistente**
-**Resultado:** ✔ Error mostrado correctamente  
-**Evidencia:**  
-
----
-
-## 3. Conclusión final
-El módulo MakersPay funciona correctamente bajo los escenarios evaluados.  
-Todos los casos críticos fueron cubiertos y aprobados sin defectos.
 
