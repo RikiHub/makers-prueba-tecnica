@@ -4,6 +4,7 @@
     cy.loginSauce()
     cy.url().should('include', 'inventory.html')
     cy.get('.inventory_list').should('be.visible')
+    cy.screenshot('.inventory_list visible after login')
   })
 
   it('Login fallido con contraseña incorrecta', () => {
